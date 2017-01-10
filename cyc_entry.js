@@ -16,10 +16,6 @@ if (!process.env.CONFIG) {
   console.log('Using environment:', process.env.CONFIG);
 }
 
-// Controllers
-const mainMenuController = require('./controllers/main-menu');
-const federalController = require('./controllers/federal');
-
 const app = express();
 
 if (process.env.NODE_ENV !== 'test') {
@@ -35,10 +31,16 @@ app.use(expressValidator());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Controllers
+const mainMenuController = require('./controllers/main-menu');
+const federalController = require('./controllers/federal');
+const stateController = require('./controllers/state');
+
 app.post('/main_menu', mainMenuController.mainMenu);
 app.post('/main_menu_redirect', mainMenuController.mainMenuRedirect);
 app.post('/federal_start', federalController.federalStart);
 app.post('/federal_lookup', federalController.federalLookup);
+app.post('/state_start', stateController.stateStart);
 
 // Production error handler
 if (app.get('env') === 'production') {
