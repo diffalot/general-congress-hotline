@@ -17,7 +17,7 @@ function getCongressPeople(zip, cb) {
     return;
   }
 
-  const url = `${CONGRESS_API_URL}&zip=$https://www.twilio.com/docs/api/twiml/pause{zip}`;
+  const url = `${CONGRESS_API_URL}&zip=${zip}`;
   request(url, (err, resp, body) => {
     const ret = JSON.parse(body).results;
     cachedZipLookups[zip] = ret;
