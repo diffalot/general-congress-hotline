@@ -25,14 +25,14 @@ function getCongressPeople(zip, cb) {
   });
 }
 
-function newCall(req, res) {
+function federalStart(req, res) {
   const call = new twilio.TwimlResponse();
 
   call.gather({
     timeout: 20,
     finishOnKey: '#',
     numDigits: 5,
-    action: 'redir_call_for_zip',
+    action: 'federal_lookup',
     method: 'POST',
   }, function () {
     this.play(config.audio.introAndPromptForZip);
@@ -47,12 +47,7 @@ function newCall(req, res) {
   res.send(call.toString());
 }
 
-function newCallTestGet(req, res) {
-  req.body = req.query;
-  return newCall(req, res);
-}
-
-function redirectCall(req, res) {
+function federalLookup(req, res) {
   const userZip = req.body.Digits || req.body.FromZip;
 
   getCongressPeople(userZip, (people) => {
@@ -94,14 +89,7 @@ function redirectCall(req, res) {
   });
 }
 
-function redirectCallTest(req, res) {
-  req.body = req.query;
-  return redirectCall(req, res);
-}
-
 module.exports = {
-  newCall,
-  newCallTestGet,
-  redirectCall,
-  redirectCallTest,
+  federalStart,
+  federalLookup,
 };

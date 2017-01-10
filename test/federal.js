@@ -1,28 +1,27 @@
 /* eslint-env node, mocha */
 
-
 const assert = require('assert');
 const request = require('supertest');
 
 const app = require('../cyc_entry.js');
 
-describe('phone', () => {
-  it('new call', (done) => {
+describe('federal lookup', () => {
+  it('federal start', (done) => {
     request(app)
-      .post('/new_phone_call')
+      .post('/federal_start')
       .expect(200)
       .expect((res) => {
         assert.notEqual(
           res.text.indexOf('audio/v2/zip_prompt.mp3'), -1,
-          '/new_phone_call should play audio/v2/zip_prompt.mp3');
+          '/federal_start should play audio/v2/zip_prompt.mp3');
       })
       .end(done);
   });
 
-  describe('redirect call', () => {
+  describe('federal zip lookup', () => {
     it('enforces zip code', (done) => {
       request(app)
-        .post('/redir_call_for_zip')
+        .post('/federal_lookup')
         .expect(200)
         .expect((res) => {
           assert.notEqual(
@@ -34,7 +33,7 @@ describe('phone', () => {
 
     it('looks up senators', (done) => {
       request(app)
-        .post('/redir_call_for_zip')
+        .post('/federal_lookup')
         .send({ Digits: '10583' })
         .expect((res) => {
           assert(res.text.indexOf('audio/v2/senator.mp3') > -1,

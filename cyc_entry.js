@@ -17,8 +17,8 @@ if (!process.env.CONFIG) {
 }
 
 // Controllers
-const phoneController = require('./controllers/phone');
 const mainMenuController = require('./controllers/main-menu');
+const federalController = require('./controllers/federal');
 
 const app = express();
 
@@ -35,13 +35,10 @@ app.use(expressValidator());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/new_phone_call', phoneController.newCall);
-app.get('/new_phone_call', phoneController.newCallTestGet);
-app.post('/redir_call_for_zip', phoneController.redirectCall);
-app.get('/redir_call_for_zip', phoneController.redirectCallTest);
-
 app.post('/main_menu', mainMenuController.mainMenu);
 app.post('/main_menu_redirect', mainMenuController.mainMenuRedirect);
+app.post('/federal_start', federalController.federalStart);
+app.post('/federal_lookup', federalController.federalLookup);
 
 // Production error handler
 if (app.get('env') === 'production') {
