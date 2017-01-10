@@ -21,10 +21,13 @@ const phoneController = require('./controllers/phone');
 
 const app = express();
 
+if (process.env.NODE_ENV !== 'test') {
+  app.use(logger('dev'));
+}
+
 app.set('view engine', 'html');
 app.set('port', process.env.PORT || 17738);
 app.use(compression());
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
