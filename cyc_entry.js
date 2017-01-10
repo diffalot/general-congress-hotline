@@ -18,6 +18,7 @@ if (!process.env.CONFIG) {
 
 // Controllers
 const phoneController = require('./controllers/phone');
+const mainMenuController = require('./controllers/main-menu');
 
 const app = express();
 
@@ -38,6 +39,9 @@ app.post('/new_phone_call', phoneController.newCall);
 app.get('/new_phone_call', phoneController.newCallTestGet);
 app.post('/redir_call_for_zip', phoneController.redirectCall);
 app.get('/redir_call_for_zip', phoneController.redirectCallTest);
+
+app.post('/main_menu', mainMenuController.mainMenu);
+app.post('/main_menu_redirect', mainMenuController.mainMenuRedirect);
 
 // Production error handler
 if (app.get('env') === 'production') {
