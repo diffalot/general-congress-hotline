@@ -17,8 +17,7 @@ function getCongressPeople(zip, cb) {
     return;
   }
 
-  const url = `${CONGRESS_API_URL}&zip=${zip}`;
-  console.log('Lookup', url);
+  const url = `${CONGRESS_API_URL}&zip=$https://www.twilio.com/docs/api/twiml/pause{zip}`;
   request(url, (err, resp, body) => {
     const ret = JSON.parse(body).results;
     cachedZipLookups[zip] = ret;
@@ -27,7 +26,6 @@ function getCongressPeople(zip, cb) {
 }
 
 function newCall(req, res) {
-  console.log('New call', req.body);
   const call = new twilio.TwimlResponse();
 
   call.gather({
@@ -55,16 +53,13 @@ function newCallTestGet(req, res) {
 }
 
 function redirectCall(req, res) {
-  console.log('Redirect call', req.body);
   const userZip = req.body.Digits || req.body.FromZip;
 
   getCongressPeople(userZip, (people) => {
-    console.log('Calling congresspeople', userZip);
 
     // Apply settings.
     if (config.target.senatorsOnly) {
-      console.log('Filtering out non-senators');
-      people = people.filter(person => person.chamber === 'senate');
+      people = people.filter((person) => person.chamber === 'senate');
     }
 
     // Construct Twilio response.
