@@ -23,10 +23,10 @@ function mainMenuRedirect(req, res) {
   const call = new twilio.TwimlResponse();
 
   switch (req.body.Digits) {
-    case 1:
+    case '1':
       call.redirect('federal_start');
       break;
-    case 2:
+    case '2':
       call.redirect('state_start');
       break;
     default:
