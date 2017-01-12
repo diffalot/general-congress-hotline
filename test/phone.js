@@ -89,18 +89,3 @@ describe('phone', () => {
     // TODO(bfaloona): Add tests for priority feature
   });
 });
-
-describe('switchboard', () => {
-  it('initiates call', (done) => {
-    request(app)
-      .post('/switchboard')
-      .expect(200)
-      .expect((res) => {
-        console.log(res.text)
-        assert.notEqual(
-          res.text.indexOf('new_phone_call'), -1,
-          'action target is new_phone_call');
-      })
-      .end(done);
-  });
-});

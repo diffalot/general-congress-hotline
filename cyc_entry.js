@@ -29,11 +29,12 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Controllers
+const switchboardController = require('./controllers/switchboard');
 const phoneController = require('./controllers/phone');
 const errorRedirectController = require('./controllers/error-redirect');
 
-app.post('/switchboard', phoneController.switchboard);
-app.get('/switchboard', phoneController.switchboardTestGet);
+app.post('/switchboard', switchboardController.switchboard);
+app.get('/switchboard', switchboardController.switchboardTestGet);
 app.post('/new_phone_call', phoneController.newCall);
 app.get('/new_phone_call', phoneController.newCallTestGet);
 
