@@ -15,7 +15,27 @@ function switchboard(req, res) {
     // Dial 1 for this, dial 2 for that...
     this.play(config.audio.switchboard.intro);
   });
-  call.redirect('/error_redirect/switchboard')
+  call.redirect('/error_redirect/switchboard');
+
+  res.status(200);
+  res.type('text/xml');
+  res.send(call.toString());
+}
+
+function switchboardRedirect(req, res) {
+  let action;
+  const call = new twilio.TwimlResponse();
+  switch (req.body.Digits) {
+    case '1':
+      action = '/federal/start/senate';
+      break;
+    case '2':
+      action = '/federal/start/house';
+      break;
+    default:
+      action = '/federal/start';
+  }
+  call.redirect(action);
 
   res.status(200);
   res.type('text/xml');
@@ -28,6 +48,7 @@ function getWrapper(fn, req, res) {
 }
 
 module.exports = {
-  switchboard: switchboard,
+  switchboard,
+  switchboardRedirect,
   switchboardTestGet: getWrapper.bind(this, switchboard),
 };

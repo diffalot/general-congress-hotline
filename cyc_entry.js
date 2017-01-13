@@ -36,15 +36,11 @@ const errorRedirectController = require('./controllers/error-redirect');
 app.post('/switchboard', switchboardController.switchboard);
 app.get('/switchboard', switchboardController.switchboardTestGet);
 
-app.post('/new_phone_call', phoneController.newCall);
-app.get('/new_phone_call', phoneController.newCallTestGet);
+app.post('/fedceral/start', phoneController.federalStart);
+app.get('/federal/start', phoneController.federalStartTestGet);
 
-app.post('/call_house', phoneController.callHouse);
-app.get('/call_house', phoneController.callHouseTestGet);
-app.post('/call_senate', phoneController.callSenate);
-app.get('/call_senate', phoneController.callSenateTestGet);
-app.post('/call_house_and_senate', phoneController.callHouseAndSenate);
-app.get('/call_house_and_senate', phoneController.callHouseAndSenateTestGet);
+app.post('/federal/call', phoneController.federalCall);
+app.get('/federal/call', phoneController.federalCallTestGet);
 
 app.post('/error_redirect/:redirect', errorRedirectController);
 

@@ -43,22 +43,24 @@ function getCongressPeople(zip, cb) {
   });
 }
 
-function newCall(req, res) {
+function federalStart(req, res) {
   console.log('Placing new call', req.body);
 
+  let chamber = req.query.chamber
+
   let action;
-  switch(req.body.Digits) {
-    case '1':
-      action = 'call_senate';
+  switch(chamber) {
+    case 'senate':
+      action = '/federal/call?chamber=senate';
       break;
-    case '2':
-      action = 'call_house';
+    case 'house':
+      action = '/federal/call?chamber=house';
       break;
     default:
-      action = 'call_house_and_senate';
+      action = '/federal/call';
   }
 
-  const audioForSelectedAction = config.audio.switchboard.options[req.body.Digits] ||
+  const audioForSelectedAction = config.audio.switchboard.options[chamber] ||
                                  config.audio.introAndPromptForZip;
 
   console.log('Chose action:', action);
