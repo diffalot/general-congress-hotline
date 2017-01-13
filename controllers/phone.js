@@ -43,25 +43,6 @@ function getCongressPeople(zip, cb) {
   });
 }
 
-function switchboard(req, res) {
-  console.log('Switchboard', req.body);
-  const call = new twilio.TwimlResponse();
-  call.gather({
-    timeout: 20,
-    numDigits: 1,
-    action: 'new_phone_call',
-    method: 'POST',
-  }, function() {
-    // Dial 1 for this, dial 2 for that...
-    this.play(config.audio.switchboard.intro);
-  });
-  call.redirect('/error_redirect/switchboard')
-
-  res.status(200);
-  res.type('text/xml');
-  res.send(call.toString());
-}
-
 function newCall(req, res) {
   console.log('Placing new call', req.body);
 
@@ -176,7 +157,4 @@ module.exports = {
   callSenateTestGet: getWrapper.bind(this, callSenate),
   callHouseTestGet: getWrapper.bind(this, callHouse),
   callHouseAndSenateTestGet: getWrapper.bind(this, callHouseAndSenate),
-
-  switchboard: switchboard,
-  switchboardTestGet: getWrapper.bind(this, switchboard),
 };
